@@ -4,7 +4,9 @@
 
 body {
     margin: 0;
-    background: #000;
+    background: radial-gradient(ellipse at 8% 15%, #00e69a0d, transparent 45%),
+        radial-gradient(ellipse at 95% 35%, #8b5cf614, transparent 50%),
+        #030708;
     color: #e8eeeb;
     font: 15px/1.8 "Courier New", monospace
 }
@@ -82,6 +84,61 @@ nav a[aria-current=page] {
     border-radius: 50%;
     background: radial-gradient(circle, #12352a, #050b08);
     animation: photo-glow 2s ease-in-out infinite
+}
+
+/* A luminous electron and its fading trail orbit the home portrait. */
+.photo-orbit {
+    position: relative;
+    flex-shrink: 0;
+    margin: 16px;
+    isolation: isolate
+}
+
+.photo-orbit .personal-photo {
+    display: block;
+    object-fit: cover;
+    animation: none;
+    border-color: #286346
+}
+
+.electron-orbit {
+    position: absolute;
+    inset: -14px;
+    border: 1px solid #00e69a20;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: electron-revolve 3.6s linear infinite
+}
+
+.electron-orbit::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0deg 235deg,
+        #00e69a08 260deg, #00e69a55 310deg, #00e69a 350deg, #d5fff1 360deg);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+    filter: drop-shadow(0 0 5px #00e69a)
+}
+
+.electron-orbit::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: #eafff8;
+    box-shadow: 0 0 7px #b0ffe5, 0 0 16px #00e69a, 0 0 28px #00e69a99
+}
+
+@keyframes electron-revolve {
+    to {
+        transform: rotate(360deg)
+    }
 }
 
 .initials {
@@ -325,14 +382,16 @@ textarea:focus-visible {
 }
 
 main.about-page,
-main.skills-page {
+main.skills-page,
+main.projects-page {
     width: 100%;
     margin: 45px auto;
     text-align: center
 }
 
 .about-page .page-intro,
-.skills-page .page-intro {
+.skills-page .page-intro,
+.projects-page .page-intro {
     margin-left: auto;
     margin-right: auto
 }
@@ -615,6 +674,91 @@ textarea:hover {
     border-color: #00e69a;
     box-shadow: 0 0 10px #00e69a80, 0 0 28px #00e69a40,
         inset 0 0 8px #00e69a1a
+}
+
+/* Shared colour accents for the portfolio. */
+.page-heading h1 span,
+.home-text h1 span {
+    background: linear-gradient(110deg, #00e69a, #41d9ef 60%, #b59aff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent
+}
+
+nav {
+    background: linear-gradient(120deg, #101d19f5, #111725f5);
+    box-shadow: 0 8px 28px #0005
+}
+
+nav a[aria-current=page] {
+    background: linear-gradient(120deg, #12352a, #12303b);
+    box-shadow: inset 0 -2px #41d9ef
+}
+
+.button {
+    background: linear-gradient(110deg, #00e69a, #41d9ef);
+    box-shadow: 0 5px 22px #00e69a24
+}
+
+.button:hover {
+    background: linear-gradient(110deg, #4cf5bd, #8ae9ff);
+    box-shadow: 0 5px 26px #41d9ef40
+}
+
+.project-card,
+.skill-card {
+    --card-accent: #00e69a;
+    border-top: 3px solid var(--card-accent);
+    background: linear-gradient(145deg, #101c20f5, #080f0bf5)
+}
+
+.project-card:nth-of-type(2),
+.skill-card:nth-child(3n + 2) {
+    --card-accent: #41d9ef
+}
+
+.project-card:nth-of-type(3),
+.skill-card:nth-child(3n) {
+    --card-accent: #b59aff
+}
+
+.project-card:nth-of-type(4) {
+    --card-accent: #f3bb70
+}
+
+.project-card .panel-label,
+.skill-card .panel-label {
+    color: var(--card-accent)
+}
+
+.project-card:hover,
+.skill-card:hover {
+    border-color: var(--card-accent);
+    box-shadow: 0 12px 32px #0006, 0 0 20px #41d9ef18
+}
+
+.projects-page .project-card .tag-list {
+    justify-content: center
+}
+
+.project-card .status-badge {
+    color: var(--card-accent);
+    border-color: var(--card-accent);
+    background: #101923
+}
+
+.tag-list li:nth-child(even),
+.technology-list li:nth-child(even) {
+    color: #a8eaf5;
+    background: #11242d;
+    border-color: #285361
+}
+
+.tag-list li:nth-child(3n),
+.technology-list li:nth-child(3n) {
+    color: #d4c4ff;
+    background: #211a32;
+    border-color: #51406e
 }
 
 .goal-list li::marker {
